@@ -38,6 +38,7 @@ private:
     int calc_state_evo = 0;
     int learn_vars;
     int init_est;
+    int iter_init;
     long unsigned int seed;
     double damp_max = 1;
     double damp_min = 0.05;
