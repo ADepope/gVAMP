@@ -39,6 +39,7 @@ vamp::vamp(int N, int M,  int Mt, double gam1, double gamw, int max_iter, double
     gam2(0),
     eta1(0),
     eta2(0),
+    iter_init(opt.get_iter_init()),
     init_est(opt.get_init_est()),
     max_iter(max_iter),
     rho(rho),
@@ -101,6 +102,7 @@ vamp::vamp(int M, double gam1, double gamw, std::vector<double> true_signal, int
     out_dir(opt.get_out_dir()),
     out_name(opt.get_out_name()),
     learn_vars(opt.get_learn_vars()),
+    iter_init(opt.get_iter_init()),
     seed(opt.get_seed()),
     true_signal(true_signal),
     model(opt.get_model()),
@@ -266,7 +268,7 @@ std::vector<double> vamp::infere_linear(data* dataset){
     }
 
     // starting VAMP iterations
-    for (int it = 1; it <= max_iter; it++)
+    for (int it = iter_init; it <= max_iter; it++)
     {    
 
         // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
