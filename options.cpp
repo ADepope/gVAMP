@@ -52,6 +52,11 @@ void Options::read_command_line_options(int argc, char** argv) {
             r1_init_file = argv[++i];
             ss << "--r1-init-file " << r1_init_file << "\n";
         }
+        else if (!strcmp(argv[i], "--x2-hat-init-file")) {
+            if (i == argc - 1) fail_if_last(argv, i);
+            x2_hat_init_file = argv[++i];
+            ss << "--x2-hat-init-file " << x2_hat_init_file << "\n";
+        }
         else if (!strcmp(argv[i], "--freeze-index-file")) {
             if (i == argc - 1) fail_if_last(argv, i);
             freeze_index_file = argv[++i];
