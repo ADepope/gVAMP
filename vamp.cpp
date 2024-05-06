@@ -77,6 +77,7 @@ vamp::vamp(int N, int M,  int Mt, double gam1, double gamw, int max_iter, double
     gamw_init = opt.get_gamw_init();
     // r1_init_file = opt.get_r1_init_file();
     x1_hat_init_file = opt.get_estimate_file();
+    x2_hat_init_file = opt.get_x2_hat_init_file();
 
     initialize_prior(this->probs, this->vars, N, Mt, rank);
 
@@ -138,6 +139,7 @@ vamp::vamp(int M, double gam1, double gamw, std::vector<double> true_signal, int
     gamw_init = opt.get_gamw_init();
     // r1_init_file = opt.get_r1_init_file();
     x1_hat_init_file = opt.get_estimate_file(); 
+    x2_hat_init_file = opt.get_x2_hat_init_file();
 
     initialize_prior(this->probs, this->vars, N, Mt, rank);
 
@@ -233,6 +235,7 @@ std::vector<double> vamp::infere_linear(data* dataset){
         gam1 = gam1_init;
         gamw = gamw_init;
 	std::vector<double> x1_hat_init = mpi_read_vec_from_file(x1_hat_init_file, M, (*dataset).get_S()); // file name ends in .bin
+	std::vector<double> x2_hat_init = mpi_read_vec_from_file(x2_hat_init_file, M, (*dataset).get_S()); // file name ends in .bin
         std::vector<double> r1_init = mpi_read_vec_from_file(r1_init_file, M, (*dataset).get_S()); // file name ends in .bin
         for (int i=0; i<M; i++){
             r1_init[i] *= sqrt(N);
@@ -240,6 +243,7 @@ std::vector<double> vamp::infere_linear(data* dataset){
 	}
         r1 = r1_init;   
 	x1_hat = x1_hat_init;
+	mu_CG_last = x2_hat_init;
     }
 
     // linear estimator
