@@ -68,6 +68,7 @@ private:
     double gamw_init;
     std::string r1_init_file;
     std::string x1_hat_init_file;
+    std::string x2_hat_init_file;
 
     std::string estimate_file;
     std::string freeze_index_file;
