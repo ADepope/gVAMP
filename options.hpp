@@ -51,6 +51,7 @@ public:
     unsigned int get_store_pvals() const { return store_pvals; }
     unsigned int get_CV() const { return CV; }
     unsigned int get_C() const { return C; }
+    unsigned int get_iter_init() const { return iter_init; }
     unsigned int get_seed() const {return seed;}
     unsigned int get_redglob() const { return redglob; }
     unsigned int get_learn_vars() const { return learn_vars; }
@@ -125,6 +126,7 @@ private:
     unsigned int CV;
     unsigned int redglob = 0;
     unsigned int C = 0;
+    unsigned int iter_init = 1;
     unsigned int init_est = 0;
     double probit_var = 1;
     double gamw_init;
