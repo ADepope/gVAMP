@@ -228,7 +228,7 @@ std::vector<double> vamp::infere_linear(data* dataset){
         gamw = gamw_init;
         std::vector<double> r1_init = mpi_read_vec_from_file(r1_init_file, M, (*dataset).get_S()); // file name ends in .bin
         for (int i=0; i<M; i++)
-            r1_init[i] /= sqrt(N);
+            r1_init[i] *= sqrt(N);
         r1 = r1_init;   
     }
 
