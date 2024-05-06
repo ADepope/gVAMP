@@ -192,6 +192,15 @@ void Options::read_command_line_options(int argc, char** argv) {
             use_freeze = (unsigned int) atoi(argv[++i]);
             ss << "--use-freeze " << use_freeze << "\n";
         }
+        else if (!strcmp(argv[i], "--iter-init")) {
+            if (i == argc - 1) fail_if_last(argv, i);
+            if (atoi(argv[i + 1]) < 0) {
+                std::cout << "FATAL  : option --iter-init has to be a non-negative integer! (" << argv[i + 1] << " was passed)" << std::endl;
+                exit(EXIT_FAILURE);
+            }
+            iter_init = (unsigned int) atoi(argv[++i]);
+            ss << "--iter-init " << iter_init << "\n";
+        }
         else if (!strcmp(argv[i], "--seed")) {
             if (i == argc - 1) fail_if_last(argv, i);
             if (atoi(argv[i + 1]) < 0) {
