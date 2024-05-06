@@ -49,6 +49,7 @@ vamp::vamp(int N, int M,  int Mt, double gam1, double gamw, int max_iter, double
     out_name(out_name),
     true_signal(true_signal),
     estimate_file(opt.get_estimate_file()),
+    r1_init_file(opt.get_r1_init_file()),
     learn_vars(opt.get_learn_vars()),
     model(model),
     gamma_damp(opt.get_gamma_damp()),
@@ -73,7 +74,8 @@ vamp::vamp(int N, int M,  int Mt, double gam1, double gamw, int max_iter, double
     // restart variables
     gam1_init = opt.get_gam1_init();
     gamw_init = opt.get_gamw_init();
-    r1_init_file = opt.get_estimate_file();  
+    // r1_init_file = opt.get_r1_init_file();
+    x1_hat_init_file = opt.get_estimate_file();
 
     initialize_prior(this->probs, this->vars, N, Mt, rank);
 
@@ -107,6 +109,7 @@ vamp::vamp(int M, double gam1, double gamw, std::vector<double> true_signal, int
     use_freeze(opt.get_use_freeze()),
     freeze_index_file(opt.get_freeze_index_file()),
     estimate_file(opt.get_estimate_file()),
+    r1_init_file(opt.get_r1_init_file()),
     store_pvals(opt.get_store_pvals()),
     gamma_damp(opt.get_gamma_damp()),
     rank(rank),
@@ -131,7 +134,8 @@ vamp::vamp(int M, double gam1, double gamw, std::vector<double> true_signal, int
     // restart variables
     gam1_init = opt.get_gam1_init();
     gamw_init = opt.get_gamw_init();
-    r1_init_file = opt.get_estimate_file(); 
+    // r1_init_file = opt.get_r1_init_file();
+    x1_hat_init_file = opt.get_estimate_file(); 
 
     initialize_prior(this->probs, this->vars, N, Mt, rank);
 
@@ -226,10 +230,14 @@ std::vector<double> vamp::infere_linear(data* dataset){
     if (gam1_init != -1){
         gam1 = gam1_init;
         gamw = gamw_init;
+	std::vector<double> x1_hat_init = mpi_read_vec_from_file(x1_hat_init_file, M, (*dataset).get_S()); // file name ends in .bin
         std::vector<double> r1_init = mpi_read_vec_from_file(r1_init_file, M, (*dataset).get_S()); // file name ends in .bin
-        for (int i=0; i<M; i++)
+        for (int i=0; i<M; i++){
             r1_init[i] *= sqrt(N);
+	    x1_hat_init[i] *= sqrt(N);
+	}
         r1 = r1_init;   
+	x1_hat = x1_hat_init;
     }
 
     // linear estimator
@@ -270,7 +278,7 @@ std::vector<double> vamp::infere_linear(data* dataset){
         if (rank == 0)
             std::cout << std::endl << "********************" << std::endl << "iteration = "<< it << std::endl << "********************" << std::endl << "->DENOISING" << std::endl;
 
-        x1_hat_prev = x1_hat;
+	x1_hat_prev = x1_hat;
 
         // updating parameters of prior distribution
         probs_before = probs;
