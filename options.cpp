@@ -47,10 +47,15 @@ void Options::read_command_line_options(int argc, char** argv) {
             estimate_file = argv[++i];
             ss << "--estimate-file " << estimate_file << "\n";
         }
+        else if (!strcmp(argv[i], "--r1-init-file")) {
+            if (i == argc - 1) fail_if_last(argv, i);
+            r1_init_file = argv[++i];
+            ss << "--r1-init-file " << r1_init_file << "\n";
+        }
         else if (!strcmp(argv[i], "--freeze-index-file")) {
             if (i == argc - 1) fail_if_last(argv, i);
             freeze_index_file = argv[++i];
-            ss << "--freeze-index-file " << estimate_file << "\n";
+            ss << "--freeze-index-file " << freeze_index_file << "\n";
         }
         else if (!strcmp(argv[i], "--cov-estimate-file")) {
             if (i == argc - 1) fail_if_last(argv, i);
