@@ -20,6 +20,7 @@ public:
     //std::string get_dim_file() const { return dim_file; }
     std::string get_bim_file() const { return bim_file; }
     std::string get_estimate_file() const { return estimate_file; }
+    std::string get_r1_init_file() const { return r1_init_file; }
     std::string get_cov_estimate_file() const { return cov_estimate_file; }
     std::string get_cov_file() const { return cov_file; }
     std::string get_freeze_index_file() const { return freeze_index_file; }
@@ -91,6 +92,7 @@ private:
     std::string bed_file = "";
     std::string bed_file_test = "";
     std::string estimate_file = "";
+    std::string r1_init_file = "";
     std::string freeze_index_file = "";
     std::string cov_estimate_file = "";
     std::string cov_file = "";
