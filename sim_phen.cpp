@@ -169,15 +169,12 @@ int main(int argc, char** argv)
             for (int i0=S; i0<S+M; i0++)
                 beta_true[i0-S] = beta_true_full[i0];
 
-    
+        }
         
         MPI_Barrier(MPI_COMM_WORLD);
-
         // storing true beta
         std::string filepath_out = opt.get_out_dir() + opt.get_out_name() + "_beta_true.bin";
         mpi_store_vec_to_file(filepath_out, beta_true, S, M);
-
-        }
     }
 
     std::random_device rand_dev;
